@@ -13,12 +13,26 @@ exports.createPackegService=async (data)=>{
 
 //get package
 
-exports.getPackageService= async (filters,query)=>{
-    const Package= await package.find({})
+exports.getPackageService= async (filters,queries)=>{
+    const Package= await package.find(filters)
+    .skip(queries.skip)
+    .limit(queries.limit)
+    .select(queries.fields)
+    .sort(queries.sortBy)
 
-    //const totalPackage=await Package.countDocuments(filters)
-    return {Package}
+   const totalPackage = await package.countDocuments(filters)
+    return {Package,totalPackage}
 }
+
+//get single package
+
+exports.getPackageServiceById = async (packageId) => {
+
+    const result = await package.findById( packageId)
+
+    return result
+}
+
 
 //update Package
 
