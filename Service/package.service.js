@@ -1,67 +1,85 @@
-const query=require('express')
+const query = require('express')
 
-const package =require('../Model/package')
+const package = require('../Model/package')
 
 
 //create package
 
-exports.createPackegService=async (data)=>{
-    const Package =await package.create(data)
+exports.createPackegService = async (data) => {
+    const Package = await package.create(data)
     return Package;
 }
 
 
 //get package
 
-exports.getPackageService= async (filters,queries)=>{
-    const Package= await package.find(filters)
-    .skip(queries.skip)
-    .limit(queries.limit)
-    .select(queries.fields)
-    .sort(queries.sortBy)
+exports.getPackageService = async (filters, queries) => {
+    const Package = await package.find(filters)
+        .skip(queries.skip)
+        .limit(queries.limit)
+        .select(queries.fields)
+        .sort(queries.sortBy)
 
-   const totalPackage = await package.countDocuments(filters)
-    return {Package,totalPackage}
+
+    const totalPackage = await package.countDocuments(filters)
+    return { Package, totalPackage }
 }
 
 //get single package
-
 exports.getPackageServiceById = async (packageId) => {
-
-    const result = await package.findById( packageId)
-
-    return result
+    const result = await package.findById(packageId)
+    return { result }
 }
-
-
 //update Package
 
-exports.updatePackegService= async(packageId,data)=>{
+exports.updatePackegService = async (packageId, data,) => {
 
-    const result= await package.updateOne(
+
+
+    const result = await package.updateOne(
         {
-            _id:packageId
-        },{
-            $set:data
-        },{
-            runValidators:true
-        })
+            _id: packageId
+        }, {
+        $set: data
+    }, {
+        runValidators: true
+    }
+    )
     return result
 }
 
 
 //Delete Package
 
-exports.deletePackegeService= async(packageId)=>{
-    const result= await package.deleteOne(
+exports.deletePackegeService = async (packageId) => {
+    const result = await package.deleteOne(
         {
             _id: packageId
 
         },
         {
-            runValidators:true
+            runValidators: true
         }
     )
 
     return result
 }
+
+
+//tranding service
+
+exports.getTrandingService = async () => {
+    const result = await package.find({}).sort({viewCount:-1}).limit(3)
+    return result
+}
+//cheapest service
+
+exports.getCheapestService = async () => {
+
+    const result = await package.find({}).sort({price:0}).limit(3)
+    return result
+
+}
+
+
+

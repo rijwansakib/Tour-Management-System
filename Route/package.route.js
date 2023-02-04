@@ -1,7 +1,14 @@
-const express=require('express')
-const router=express.Router()
+const express = require('express')
+const router = express.Router()
 
-const packageController=require('../Controllers/package.conroller')
+const packageController = require('../Controllers/package.conroller')
+
+router.route('/trending')
+    .get(packageController.trandingPackage)
+    
+router.route('/cheapest')
+    .get(packageController.cheapestPackage)
+
 
 router.route('/')
     .get(packageController.getPackage)
@@ -11,4 +18,4 @@ router.route('/:id')
     .patch(packageController.updatePackege)
     .delete(packageController.deletePackage)
 
-module.exports=router
+module.exports = router

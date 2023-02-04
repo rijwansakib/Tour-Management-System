@@ -3,10 +3,12 @@ const app=express()
 const cors=require('cors')
 const mongoose=require('mongoose')
 
+
 //midleware
 
 app.use(express.json());
 app.use(cors());
+
 
 
 //route

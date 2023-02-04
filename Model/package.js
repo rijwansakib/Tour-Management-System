@@ -17,6 +17,10 @@ const packegeSchema = mongoose.Schema({
         required: true,
         min: 0
     },
+    viewCount:{
+        type:Number,
+        default:0
+    },
     // unit: {
     //     type: String,
     //     required: true,
